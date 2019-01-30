@@ -1514,7 +1514,7 @@ double bipartite_allgather_full_duplex_benchmark_emulation(int rank,int dim_x,in
 }
 
 int main(int argc, char **argv){
-	int procs,rank,i,size1,size2,dim_x,n_senders,n_receivers,pattern=0,method=0,iterations=10;
+	int procs,rank,i,size1=1,size2=1,dim_x=1,n_senders,n_receivers,pattern=0,method=0,iterations=10;
 	double sum_time,min,max,temp;
 	double *temp_timings;
 	MPI_Init(&argc, &argv);

@@ -37,9 +37,9 @@ by the command-line option `-n`. The default is 10.
 		   4: Intergroup Allgather with algorithm 2 of PARCO paper
     ```
 * Example outputs on screen
-  * Suppose we have 10 processes in group A and 22 processes in group B. Every process in group A sends 10 data blocks to group B and every process in group B sends 20 data blocks to group A. Every data block has 11 integers. We want to evaluate Algorithm 2 proposed in PARCO paper with 5 iterations.
+  * Suppose we have 10 processes in group A and 22 processes in group B. Every process in group A sends 15 data blocks to group B and every process in group B sends 20 data blocks to group A. Every data block has 11 integers. We want to evaluate Algorithm 2 proposed in PARCO paper with 5 iterations.
   ```
-    % mpiexec -n 32 ./allgather_test -a 10 -b 20 -s 10 -r 22 -d 11 -p 0 -t 4 -n 5
+    % mpiexec -n 32 ./allgather_test -a 15 -b 20 -s 10 -r 22 -d 11 -p 0 -t 4 -n 5
 	n_senders=10,n_receivers=22,dim_x=11,size1=10,size2=20,method=4,pattern=0
 	Universal full duplex allgatherv time=0.059017(message size time)+0.037100(intergroup message transfer)+0.066018(intragroup allgather)=0.162135
 	Universal full duplex allgatherv time=0.036167(message size time)+0.020993(intergroup message transfer)+0.039993(intragroup allgather)=0.097153
