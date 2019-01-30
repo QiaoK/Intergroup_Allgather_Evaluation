@@ -1,10 +1,9 @@
-#include "mpi.h"
+#include <mpi.h>
 #include <unistd.h> /* getopt() */
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "random.h"
 #define FLOATING_CHECK(a,b) (a!=b)
 #define DEBUG 0
 #define ERR { \
@@ -1544,7 +1543,7 @@ int main(int argc, char **argv){
 			case 'h':
 				default:  if (rank==0) usage(argv[0]);
 					MPI_Finalize();
-			return 1;
+			return 0;
 		}
 	}
 	if(rank==0){
