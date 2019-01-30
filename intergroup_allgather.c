@@ -494,7 +494,7 @@ double bipartite_allgather_simple_universal_full_duplex_emulation(int rank,int d
 	//local variables
 	void *tmp_buf=NULL,*tmp_buf_ptr,*original_ptr,*recvbuf,*sendbuf,*adjusted_sendbuf;
 	int sendcount, recvcount,i,color;
-        double allgather_time=0,setup_time=0,start,total_time;
+        double allgather_time=0,start,total_time;
 	int remote_size=0,local_size=0,tmp_buf_size=0,local_rank,local_group_number=0,temp,temp2=0,target_rank=0,remainder2=0,shift=0;
 	MPI_Status status;
 	int *displs,*recvcounts;
@@ -648,7 +648,7 @@ double bipartite_allgather_simple_universal_full_duplex_emulation(int rank,int d
 	validate_result(rank,n_senders,n_receivers,receive_buff,recvcount);
 	#endif
 	if(rank==0){
-		printf("Full-duplex simple universal Allgather emulation setup=%lf,processing=%lf\n",setup_time,result);
+		printf("Full-duplex simple universal Allgather emulation processing=%lf\n",result);
 	}
 	free(sendbuf);
 	free(recvbuf);
@@ -671,7 +671,7 @@ double bipartite_allgather_universal_full_duplex_emulation(int rank,int dim_x,in
 	//local variables
 	void *tmp_buf=NULL,*tmp_buf_ptr,*original_ptr,*recvbuf,*sendbuf,*adjusted_sendbuf;
 	int sendcount, recvcount,i;
-        double allgather_time=0,setup_time=0,start,total_time;
+        double allgather_time=0,start,total_time;
 	int group_number=0,remote_size=0,local_size=0,tmp_buf_size=0,local_rank,local_group_number,temp,temp2=0,message_rank,target_rank,remainders2=0,shift;
 	MPI_Status status;
 	int *subgroup_ranks,*displs,*recvcounts;
@@ -1089,7 +1089,7 @@ double bipartite_allgather_universal_full_duplex_emulation(int rank,int dim_x,in
 	validate_result(rank,n_senders,n_receivers,receive_buff,recvcount);
 	#endif
 	if(rank==0){
-		printf("Full-duplex universal Allgather emulation setup=%lf,processing=%lf\n",setup_time,result);
+		printf("Full-duplex universal Allgather emulation processing=%lf\n",result);
 	}
 	free(sendbuf);
 	free(recvbuf);
@@ -1112,7 +1112,7 @@ void bipartite_allgather_full_duplex_emulation(int rank,int dim_x,int n_senders,
 	//local variables
 	void *tmp_buf=NULL,*tmp_buf_ptr,*recvbuf,*sendbuf;
 	int sendcount, recvcount,i;
-        double allgather_time=0,setup_time=0,start,total_time;
+        double allgather_time=0,start,total_time;
 	int group_number=0,remote_size=0,local_size=0,tmp_buf_size=0,local_rank;
 	MPI_Status status;
 	int *subgroup_ranks;
@@ -1322,7 +1322,7 @@ void bipartite_allgather_full_duplex_emulation(int rank,int dim_x,int n_senders,
 	validate_result(rank,n_senders,n_receivers,receive_buff,recvcount);
 	#endif
 	if(rank==0){
-		printf("Full-duplex Allgather emulation setup=%lf,processing=%lf\n",setup_time,allgather_time);
+		printf("Full-duplex Allgather emulation processing=%lf\n",allgather_time);
 	}
 	free(sendbuf);
 	free(recvbuf);
@@ -1341,7 +1341,7 @@ double bipartite_allgather_full_duplex(int rank,int dim_x,int n_senders,int n_re
 	//local variables
 	void *sendbuf=NULL, *recvbuf=NULL;
 	int color,sendcount, recvcount;
-        double allgather_time=0,setup_time=0,start,total_time;
+        double allgather_time=0,start,total_time;
 	MPI_Comm local_comm, remote_comm;
 	int *receive_buff=NULL,*send_buff=NULL;
         start=MPI_Wtime();
@@ -1377,7 +1377,7 @@ double bipartite_allgather_full_duplex(int rank,int dim_x,int n_senders,int n_re
 	MPI_Comm_free(&remote_comm);
 	MPI_Comm_free(&local_comm);
 	if(rank==0){
-		printf("Full-duplex Allgather Benchmark setup=%lf,processing=%lf\n",setup_time,allgather_time);
+		printf("Full-duplex Allgather Benchmark processing=%lf\n",allgather_time);
 	}
 	free(sendbuf);
 	free(recvbuf);
@@ -1396,7 +1396,7 @@ double bipartite_allgather_full_duplex_benchmark_emulation(int rank,int dim_x,in
 	//local variables
 	void *sendbuf=NULL, *recvbuf=NULL,*data=NULL;
 	int sendcount, recvcount,local_size,remote_size,i;
-        double allgather_time=0,setup_time=0,start,total_time;
+        double allgather_time=0,start,total_time;
 	int* subgroup_ranks;
 	int *receive_buff=NULL,*send_buff=NULL;
         start=MPI_Wtime();
@@ -1499,7 +1499,7 @@ double bipartite_allgather_full_duplex_benchmark_emulation(int rank,int dim_x,in
 	validate_result(rank,n_senders,n_receivers,receive_buff,recvcount);
 	#endif
 	if(rank==0){
-		printf("Full-duplex Allgather Benchmark setup=%lf,processing=%lf\n",setup_time,allgather_time);
+		printf("Full-duplex Allgather Benchmark processing=%lf\n",allgather_time);
 	}
 	//printf("rank=%d\n",rank);
 	
@@ -1541,7 +1541,7 @@ int main(int argc, char **argv){
 				break;
 			case 't': method = atoi(optarg);
 				break;
-			case 'p': method = atoi(optarg);
+			case 'p': pattern = atoi(optarg);
 				break;
 			case 'n': iterations = atoi(optarg);
 				break;
