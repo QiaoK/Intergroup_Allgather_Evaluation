@@ -1,3 +1,10 @@
+/*
+ * Copyright (C) 2019, Northwestern University
+ * See COPYRIGHT notice in top-level directory.
+ *
+ * This program evaluates the performance of all-to-all broadcast (Allgather and Allgatherv) algorithms proposed in our research paper.
+ */
+
 #include <mpi.h>
 #include <unistd.h> /* getopt() */
 #include <stdlib.h>
@@ -164,11 +171,9 @@ void send_map(int rank,int n_senders,int* size1, int *size2,int local_rank,int l
 	high_stacks=temp%remote_size-remote_size*((temp%remote_size)/remote_size);
 	if(temp2<high_stacks*(message_group_size+1)){
 		send_start=temp2/(message_group_size+1);
-		//sendcount=message_group_size+1-(temp2-(message_group_size+1)*send_start);
 		sendcount=(message_group_size+1)*(send_start+1)-temp2;
 	}else{
 		send_start=high_stacks+(temp2-high_stacks*(message_group_size+1))/message_group_size;
-		//sendcount=message_group_size-(temp2-(message_group_size+1)*high_stacks-message_group_size*(send_start-high_stacks));
 		sendcount=(message_group_size+1)*high_stacks+message_group_size*(send_start-high_stacks+1)-temp2;
 	}
 	for(i=send_start;i<remote_size&&sendcount_total>0;i++){
@@ -368,7 +373,7 @@ double* bipartite_allgatherv_universal_full_duplex_emulation(int rank,int dim_x,
         MPI_Waitall(send_rank_size+recv_rank_size, request, status);
 
 	map_time=MPI_Wtime()-map_time;
-
+	//Intragroup Allgather
 	allgather_time=MPI_Wtime();
 	MPI_Allgatherv(tmp_buf,message_group_size,MPI_INT,recvbuf,recvcounts2,displs,MPI_INT,new_comm);
 	allgather_time=MPI_Wtime()-allgather_time;
