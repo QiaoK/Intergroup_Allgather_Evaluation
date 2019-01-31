@@ -11,10 +11,6 @@ by the command-line option `-n`. The default is 10.
     `allgather_test`.
 
 * Run command:
-  * Example run command using `mpiexec` and 64 MPI processes:
-    ```
-      % mpiexec -n 32 ./allgather_test -a 10 -b 20 -s 10 -r 22 -d 11 -p 1 -t 4 -n 5
-    ```
   * Command-line options:
     ```
       % ./allgather_test -h
