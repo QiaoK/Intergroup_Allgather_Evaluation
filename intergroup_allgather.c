@@ -1394,7 +1394,8 @@ double bipartite_allgather_full_duplex(int rank,int dim_x,int n_senders,int n_re
 */
 double bipartite_allgather_full_duplex_benchmark_emulation(int rank,int dim_x,int n_senders,int n_receivers,int size1,int size2){
 	//local variables
-	char *sendbuf=NULL, *recvbuf=NULL,*data=NULL;
+	char *sendbuf=NULL, *recvbuf=NULL;
+	int *data=NULL;
 	int sendcount, recvcount,local_size,remote_size,i;
         double allgather_time=0,start,total_time;
 	int* subgroup_ranks;
