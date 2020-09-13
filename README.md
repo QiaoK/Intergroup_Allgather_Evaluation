@@ -5,7 +5,7 @@ a loop. The number of iterations can be set
 by the command-line option `-n`. The default is 10.
 
 * Compile command:
-  * Edit file [./Makefile](Makefile) to customize the C compiler and compile
+  * Edit file (Makefile to customize the C compiler and compile
     options.
   * Run command `make` to compile and generate the executable program named
     `allgather_test`.
