@@ -274,7 +274,7 @@ void receive_map(int rank,int n_senders,int* size1, int *size2,int local_rank,in
     6. v_size2: an array of number of dim_x elements in group B per process
 */
 double* bipartite_allgatherv_universal_full_duplex_emulation(int rank,int dim_x,int n_senders,int n_receivers,int* v_size1, int *v_size2){
-	void *tmp_buf=NULL,*tmp_buf_ptr,*original_ptr,*recvbuf,*sendbuf,*send_buf_tmp;
+	char *tmp_buf=NULL,*tmp_buf_ptr,*original_ptr,*recvbuf,*sendbuf,*send_buf_tmp;
 	int *receive_buff=NULL,*send_buff=NULL;
 	MPI_Status *status;
         double allgather_time=0,start,send_size_time,map_time;
@@ -314,8 +314,8 @@ double* bipartite_allgatherv_universal_full_duplex_emulation(int rank,int dim_x,
 	//Data creations
 	create_vector_data(rank, n_senders,n_receivers,&send_buff,&receive_buff,size1,size2,dim_x);
         start=MPI_Wtime()-start;
-	recvbuf=(void*)receive_buff;
-	sendbuf=(void*)send_buff;
+	recvbuf=(char*)receive_buff;
+	sendbuf=(char*)send_buff;
 
         send_size_time=MPI_Wtime();
 	//No effect, simply simulate the synchronization of all send size.
@@ -412,7 +412,7 @@ double* bipartite_allgatherv_universal_full_duplex_emulation(int rank,int dim_x,
 */
 double bipartite_allgatherv_full_duplex(int rank,int dim_x,int n_senders,int n_receivers,int* v_size1, int *v_size2){
 	//local variables
-	void *sendbuf=NULL, *recvbuf=NULL;
+	char *sendbuf=NULL, *recvbuf=NULL;
 	int color, sendcount, *recvcounts,local_size,i;
         double allgather_time=0,start,total_time;
 	MPI_Comm local_comm, remote_comm;
@@ -454,8 +454,8 @@ double bipartite_allgatherv_full_duplex(int rank,int dim_x,int n_senders,int n_r
 			displs[i]=displs[i-1]+recvcounts[i-1];
 		}
 	}
-	recvbuf=(void*)receive_buff;
-	sendbuf=(void*)send_buff;
+	recvbuf=(char*)receive_buff;
+	sendbuf=(char*)send_buff;
         total_time=MPI_Wtime();
         start=MPI_Wtime();
 	/* use Allgather to achieve effect of all Bcast from the 1st group * to 2nd group */
@@ -492,7 +492,7 @@ double bipartite_allgatherv_full_duplex(int rank,int dim_x,int n_senders,int n_r
 */
 double bipartite_allgather_simple_universal_full_duplex_emulation(int rank,int dim_x,int n_senders,int n_receivers,int size1, int size2){
 	//local variables
-	void *tmp_buf=NULL,*tmp_buf_ptr,*original_ptr,*recvbuf,*sendbuf,*adjusted_sendbuf;
+	char *tmp_buf=NULL,*tmp_buf_ptr,*original_ptr,*recvbuf,*sendbuf,*adjusted_sendbuf;
 	int sendcount, recvcount,i,color;
         double allgather_time=0,start,total_time;
 	int remote_size=0,local_size=0,tmp_buf_size=0,local_rank,local_group_number=0,temp,temp2=0,target_rank=0,remainder2=0,shift=0;
@@ -520,8 +520,8 @@ double bipartite_allgather_simple_universal_full_duplex_emulation(int rank,int d
 	MPI_Barrier(MPI_COMM_WORLD);
         total_time=MPI_Wtime();
         start=MPI_Wtime();
-	recvbuf=(void*)receive_buff;
-	sendbuf=(void*)send_buff;
+	recvbuf=(char*)receive_buff;
+	sendbuf=(char*)send_buff;
 	if( remote_size >= local_size ){
 		remainder = remote_size % local_size;
 		temp = (remote_size + local_size - 1) / local_size;
@@ -669,7 +669,7 @@ double bipartite_allgather_simple_universal_full_duplex_emulation(int rank,int d
 */
 double bipartite_allgather_universal_full_duplex_emulation(int rank,int dim_x,int n_senders,int n_receivers,int size1, int size2){
 	//local variables
-	void *tmp_buf=NULL,*tmp_buf_ptr,*original_ptr,*recvbuf,*sendbuf,*adjusted_sendbuf;
+	char *tmp_buf=NULL,*tmp_buf_ptr,*original_ptr,*recvbuf,*sendbuf,*adjusted_sendbuf;
 	int sendcount, recvcount,i;
         double allgather_time=0,start,total_time;
 	int group_number=0,remote_size=0,local_size=0,tmp_buf_size=0,local_rank,local_group_number,temp,temp2=0,message_rank,target_rank,remainders2=0,shift;
@@ -697,8 +697,8 @@ double bipartite_allgather_universal_full_duplex_emulation(int rank,int dim_x,in
 	MPI_Barrier(MPI_COMM_WORLD);
         total_time=MPI_Wtime();
         start=MPI_Wtime();
-	recvbuf=(void*)receive_buff;
-	sendbuf=(void*)send_buff;
+	recvbuf=(char*)receive_buff;
+	sendbuf=(char*)send_buff;
 	if(remote_size>local_size){
 		group_number=remote_size/local_size;
 		tmp_buf_size=((remote_size+local_size-1)/local_size)*recvcount;
@@ -1110,7 +1110,7 @@ double bipartite_allgather_universal_full_duplex_emulation(int rank,int dim_x,in
 */
 void bipartite_allgather_full_duplex_emulation(int rank,int dim_x,int n_senders,int n_receivers,int size1, int size2){
 	//local variables
-	void *tmp_buf=NULL,*tmp_buf_ptr,*recvbuf,*sendbuf;
+	char *tmp_buf=NULL,*tmp_buf_ptr,*recvbuf,*sendbuf;
 	int sendcount, recvcount,i;
         double allgather_time=0,start,total_time;
 	int group_number=0,remote_size=0,local_size=0,tmp_buf_size=0,local_rank;
@@ -1134,8 +1134,8 @@ void bipartite_allgather_full_duplex_emulation(int rank,int dim_x,int n_senders,
 	MPI_Comm_group(MPI_COMM_WORLD, &world_group);
 	//Data creations
 	create_data(rank, n_senders,n_receivers,&send_buff,&receive_buff,&sendcount,&recvcount,dim_x,size1,size2);
-	recvbuf=(void*)receive_buff;
-	sendbuf=(void*)send_buff;
+	recvbuf=(char*)receive_buff;
+	sendbuf=(char*)send_buff;
 	if(remote_size>local_size){
 		group_number=remote_size/local_size;
 		tmp_buf_size=((remote_size+local_size-1)/local_size)*recvcount;
@@ -1339,7 +1339,7 @@ void bipartite_allgather_full_duplex_emulation(int rank,int dim_x,int n_senders,
 */
 double bipartite_allgather_full_duplex(int rank,int dim_x,int n_senders,int n_receivers,int size1,int size2){
 	//local variables
-	void *sendbuf=NULL, *recvbuf=NULL;
+	char *sendbuf=NULL, *recvbuf=NULL;
 	int color,sendcount, recvcount;
         double allgather_time=0,start,total_time;
 	MPI_Comm local_comm, remote_comm;
@@ -1357,8 +1357,8 @@ double bipartite_allgather_full_duplex(int rank,int dim_x,int n_senders,int n_re
 	/* only the processes in 1st group send and only 2nd group receive */
 	//printf("rank=%d\n",rank);
 	create_data(rank, n_senders,n_receivers,&send_buff,&receive_buff,&sendcount,&recvcount,dim_x,size1,size2);
-	recvbuf=(void*)receive_buff;
-	sendbuf=(void*)send_buff;
+	recvbuf=(char*)receive_buff;
+	sendbuf=(char*)send_buff;
 	MPI_Barrier(MPI_COMM_WORLD);
         total_time=MPI_Wtime();
         start=MPI_Wtime();
@@ -1394,7 +1394,7 @@ double bipartite_allgather_full_duplex(int rank,int dim_x,int n_senders,int n_re
 */
 double bipartite_allgather_full_duplex_benchmark_emulation(int rank,int dim_x,int n_senders,int n_receivers,int size1,int size2){
 	//local variables
-	void *sendbuf=NULL, *recvbuf=NULL,*data=NULL;
+	char *sendbuf=NULL, *recvbuf=NULL,*data=NULL;
 	int sendcount, recvcount,local_size,remote_size,i;
         double allgather_time=0,start,total_time;
 	int* subgroup_ranks;
@@ -1452,8 +1452,8 @@ double bipartite_allgather_full_duplex_benchmark_emulation(int rank,int dim_x,in
 		free(subgroup_ranks);
 	}
 	create_data(rank, n_senders,n_receivers,&send_buff,&receive_buff,&sendcount,&recvcount,dim_x,size1,size2);
-	recvbuf=(void*)receive_buff;
-	sendbuf=(void*)send_buff;
+	recvbuf=(char*)receive_buff;
+	sendbuf=(char*)send_buff;
 	if(rank<n_senders){
 		local_size=n_senders;
 		remote_size=n_receivers;
